@@ -7,6 +7,10 @@ from subprocess import check_call, check_output
 import subprocess
 import multiprocessing
 
+################## Version Control ##################
+BU_GIT_BRANCH = "binutils-2_40-branch"
+GCC_GIT_BRANCH = "releases/gcc-12"
+
 ################## Global Config ##################
 CURRENT_DIR = os.getcwd()
 INSTALL_DIR = os.path.join(CURRENT_DIR, "install")
@@ -21,7 +25,6 @@ IS_LINUX = platform.system() == "Linux"
 
 MK_CPU_NUM = '-j{}'.format(multiprocessing.cpu_count())
 ################## Binutils Config ##################
-BU_GIT_BRANCH = "binutils-2_40-branch"
 
 BU_CONFIGURE_FLAGS = ""
 BU_CONFIGURE_FLAGS += "--prefix={} ".format(INSTALL_DIR_BU)
@@ -29,7 +32,6 @@ BU_CONFIGURE_FLAGS += "--with-sysroot=/ --with-system-zlib --enable-plugins --en
 BU_CONFIGURE_FLAGS += "--disable-gdb --disable-gdbserver "
 
 ################## Gcc Config ##################
-GCC_GIT_BRANCH = "releases/gcc-13"
 
 GCC_CONFIGURE_FLAGS = ""
 GCC_CONFIGURE_FLAGS += "--prefix={} ".format(INSTALL_DIR_GCC)
