@@ -11,5 +11,10 @@ git submodule sync
 git submodule update --init --recursive
 ```
 
+## Build toolchain
+```cmd
+python toolchain_builder.py
+```
+
 ## Output
 The toolchains will be installed in `"install"` sub-folder.
