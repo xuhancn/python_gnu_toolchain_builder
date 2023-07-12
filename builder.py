@@ -11,6 +11,9 @@ import multiprocessing
 CURRENT_DIR = os.getcwd()
 INSTALL_DIR = os.path.join(CURRENT_DIR, "install")
 
+INSTALL_DIR_BU = os.path.join(INSTALL_DIR, "binutils")
+INSTALL_DIR_GCC = os.path.join(INSTALL_DIR, "gcc")
+
 BUILD_DIR_BU =  os.path.join(CURRENT_DIR, "build_bu")
 BUILD_DIR_GCC =  os.path.join(CURRENT_DIR, "build_gcc")
 
@@ -21,13 +24,15 @@ MK_CPU_NUM = '-j{}'.format(multiprocessing.cpu_count())
 BU_GIT_BRANCH = "binutils-2_40-branch"
 
 BU_CONFIGURE_FLAGS = ""
-BU_CONFIGURE_FLAGS += "--prefix={} ".format(INSTALL_DIR)
+BU_CONFIGURE_FLAGS += "--prefix={} ".format(INSTALL_DIR_BU)
 BU_CONFIGURE_FLAGS += "--with-sysroot=/ --with-system-zlib --enable-plugins --enable-gold --enable-threads "
 BU_CONFIGURE_FLAGS += "--disable-gdb --disable-gdbserver "
 
 ################## Gcc Config ##################
+GCC_GIT_BRANCH = "releases/gcc-13"
+
 GCC_CONFIGURE_FLAGS = ""
-GCC_CONFIGURE_FLAGS += "--prefix={} ".format(INSTALL_DIR)
+GCC_CONFIGURE_FLAGS += "--prefix={} ".format(INSTALL_DIR_GCC)
 GCC_CONFIGURE_FLAGS += "--enable-languages=c,c++,fortran,objc,obj-c++,lto,go "
 GCC_CONFIGURE_FLAGS += "--enable-bootstrap "
 GCC_CONFIGURE_FLAGS += "--enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --with-linker-hash-style=gnu --enable-plugin --enable-initfini-array --enable-offload-targets=nvptx-none --without-cuda-driver --enable-gnu-indirect-function --enable-cet --with-tune=generic --with-arch_32=i686 --with-multilib-list=m32,m64 --with-build-config=bootstrap-lto --enable-link-serialization=1 --with-fpmath=sse "
@@ -68,7 +73,7 @@ def build_binutils():
     BU_CFG = os.path.join(BU_SOURCE, "." , "configure")
 
     my_env = os.environ.copy()
-    my_env["CC"] = "gcc"
+    # my_env["CC"] = "gcc"
 
     status_code = subprocess.check_call(["sh", "-c" ,"{} {}".format(BU_CFG, BU_CONFIGURE_FLAGS)], cwd=BUILD_DIR_BU, env=my_env)
 
@@ -79,6 +84,28 @@ def build_binutils():
     return 0
 
 def build_gcc():
+    recreate_if_exist(BUILD_DIR_GCC)
+
+    GCC_SOURCE = os.path.join(CURRENT_DIR, "gnu_repos" , "gcc")
+
+    status_code = subprocess.check_call(["git", "checkout", GCC_GIT_BRANCH], cwd=GCC_SOURCE)
+
+    GCC_DOWNLOAD_DEPENDS = os.path.join(GCC_SOURCE, "contrib" , "download_prerequisites")
+    status_code = subprocess.check_call([GCC_DOWNLOAD_DEPENDS], cwd=GCC_SOURCE)
+
+    GCC_CFG = os.path.join(GCC_SOURCE, "." , "configure")
+
+    my_env = os.environ.copy()
+    bu_path = os.path.join(INSTALL_DIR_BU, "bin")
+    cur_path = bu_path + ":" + my_env["PATH"]
+    my_env["PATH"] = cur_path
+
+    status_code = subprocess.check_call(["sh", "-c" ,"{} {}".format(GCC_CFG, GCC_CONFIGURE_FLAGS)], cwd=BUILD_DIR_GCC, env=my_env)
+
+    status_code = subprocess.check_call(["make", MK_CPU_NUM], cwd=BUILD_DIR_GCC)
+
+    status_code = subprocess.check_call(["make", "install"], cwd=BUILD_DIR_GCC)
+
     return 0
 
 if __name__ == '__main__':
