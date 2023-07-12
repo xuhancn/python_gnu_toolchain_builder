@@ -37,7 +37,12 @@ GCC_CONFIGURE_FLAGS = ""
 GCC_CONFIGURE_FLAGS += "--prefix={} ".format(INSTALL_DIR_GCC)
 GCC_CONFIGURE_FLAGS += "--enable-languages=c,c++,fortran,objc,obj-c++,lto,go "
 GCC_CONFIGURE_FLAGS += "--enable-bootstrap "
-GCC_CONFIGURE_FLAGS += "--enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --with-linker-hash-style=gnu --enable-plugin --enable-initfini-array --enable-offload-targets=nvptx-none --without-cuda-driver --enable-gnu-indirect-function --enable-cet --with-tune=generic --with-arch_32=i686 --with-multilib-list=m32,m64 --with-build-config=bootstrap-lto --enable-link-serialization=1 --with-fpmath=sse "
+GCC_CONFIGURE_FLAGS += "--enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib "
+GCC_CONFIGURE_FLAGS += "--enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id "
+GCC_CONFIGURE_FLAGS += "--with-gcc-major-version-only --with-linker-hash-style=gnu --enable-plugin --enable-initfini-array "
+GCC_CONFIGURE_FLAGS += "--enable-offload-targets=nvptx-none --without-cuda-driver --enable-gnu-indirect-function --enable-cet "
+GCC_CONFIGURE_FLAGS += "--with-tune=generic --with-arch_32=i686 --with-multilib-list=m32,m64 --with-build-config=bootstrap-lto "
+GCC_CONFIGURE_FLAGS += "--enable-link-serialization=1 --with-fpmath=sse "
 
 ################## Basic Function ##################
 def create_if_not_exist(path_dir):

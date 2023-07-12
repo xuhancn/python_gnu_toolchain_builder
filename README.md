@@ -1,6 +1,7 @@
 # python_gnu_toolchain_builder
 
 ## Install Build Depends
+### Ubuntu:
 ```cmd
 sudo apt-get install gcc build-essential bison flex libgmp3-dev libmpc-dev libmpfr-dev texinfo gcc-multilib
 ```
