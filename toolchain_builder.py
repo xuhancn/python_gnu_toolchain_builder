@@ -70,18 +70,19 @@ def build_binutils():
 
     BU_SOURCE = os.path.join(CURRENT_DIR, "gnu_repos" , "binutils-gdb")
 
-    status_code = subprocess.check_call(["git", "checkout", BU_GIT_BRANCH], cwd=BU_SOURCE)
+    subprocess.check_call(["git", "reset", "--hard"], cwd=BU_SOURCE)
+    subprocess.check_call(["git", "checkout", BU_GIT_BRANCH], cwd=BU_SOURCE)
 
     BU_CFG = os.path.join(BU_SOURCE, "." , "configure")
 
     my_env = os.environ.copy()
     # my_env["CC"] = "gcc"
 
-    status_code = subprocess.check_call(["sh", "-c" ,"{} {}".format(BU_CFG, BU_CONFIGURE_FLAGS)], cwd=BUILD_DIR_BU, env=my_env)
+    subprocess.check_call(["sh", "-c" ,"{} {}".format(BU_CFG, BU_CONFIGURE_FLAGS)], cwd=BUILD_DIR_BU, env=my_env)
 
-    status_code = subprocess.check_call(["make", MK_CPU_NUM], cwd=BUILD_DIR_BU)
+    subprocess.check_call(["make", MK_CPU_NUM], cwd=BUILD_DIR_BU)
 
-    status_code = subprocess.check_call(["make", "install"], cwd=BUILD_DIR_BU)
+    subprocess.check_call(["make", "install"], cwd=BUILD_DIR_BU)
 
     return 0
 
@@ -90,10 +91,11 @@ def build_gcc():
 
     GCC_SOURCE = os.path.join(CURRENT_DIR, "gnu_repos" , "gcc")
 
-    status_code = subprocess.check_call(["git", "checkout", GCC_GIT_BRANCH], cwd=GCC_SOURCE)
+    subprocess.check_call(["git", "reset", "--hard"], cwd=GCC_SOURCE)
+    subprocess.check_call(["git", "checkout", GCC_GIT_BRANCH], cwd=GCC_SOURCE)
 
     GCC_DOWNLOAD_DEPENDS = os.path.join(GCC_SOURCE, "contrib" , "download_prerequisites")
-    status_code = subprocess.check_call([GCC_DOWNLOAD_DEPENDS], cwd=GCC_SOURCE)
+    subprocess.check_call([GCC_DOWNLOAD_DEPENDS], cwd=GCC_SOURCE)
 
     GCC_CFG = os.path.join(GCC_SOURCE, "." , "configure")
 
@@ -102,11 +104,11 @@ def build_gcc():
     cur_path = bu_path + ":" + my_env["PATH"]
     my_env["PATH"] = cur_path
 
-    status_code = subprocess.check_call(["sh", "-c" ,"{} {}".format(GCC_CFG, GCC_CONFIGURE_FLAGS)], cwd=BUILD_DIR_GCC, env=my_env)
+    subprocess.check_call(["sh", "-c" ,"{} {}".format(GCC_CFG, GCC_CONFIGURE_FLAGS)], cwd=BUILD_DIR_GCC, env=my_env)
 
-    status_code = subprocess.check_call(["make", MK_CPU_NUM], cwd=BUILD_DIR_GCC)
+    subprocess.check_call(["make", MK_CPU_NUM], cwd=BUILD_DIR_GCC)
 
-    status_code = subprocess.check_call(["make", "install"], cwd=BUILD_DIR_GCC)
+    subprocess.check_call(["make", "install"], cwd=BUILD_DIR_GCC)
 
     return 0
 
