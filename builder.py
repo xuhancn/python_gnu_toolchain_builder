@@ -24,9 +24,6 @@ BU_CONFIGURE_FLAGS = ""
 BU_CONFIGURE_FLAGS += "--prefix={} ".format(INSTALL_DIR)
 BU_CONFIGURE_FLAGS += "--with-sysroot=/ --with-system-zlib --enable-plugins --enable-gold --enable-threads "
 BU_CONFIGURE_FLAGS += "--disable-gdb --disable-gdbserver "
-# BU_CONFIGURE_FLAGS += "--disable-nls "
-# BU_CONFIGURE_FLAGS += "--disable-werror "
-BU_CONFIGURE_FLAGS += "--disable-multilib "
 
 ################## Gcc Config ##################
 GCC_CONFIGURE_FLAGS = ""
@@ -73,9 +70,11 @@ def build_binutils():
     my_env = os.environ.copy()
     my_env["CC"] = "gcc"
 
-    status_code = subprocess.check_call([BU_CFG, BU_CONFIGURE_FLAGS], cwd=BUILD_DIR_BU, env=my_env)
+    status_code = subprocess.check_call(["sh", "-c" ,"{} {}".format(BU_CFG, BU_CONFIGURE_FLAGS)], cwd=BUILD_DIR_BU, env=my_env)
 
     status_code = subprocess.check_call(["make", MK_CPU_NUM], cwd=BUILD_DIR_BU)
+
+    status_code = subprocess.check_call(["make", "install"], cwd=BUILD_DIR_BU)
 
     return 0
 
