@@ -6,6 +6,7 @@ import errno
 from subprocess import check_call, check_output
 import subprocess
 import multiprocessing
+import shutil
 
 ################## Version Control ##################
 BU_GIT_BRANCH = "binutils-2_40-branch"
@@ -55,11 +56,7 @@ def create_if_not_exist(path_dir):
 
 def recreate_if_exist(path_dir):
     if os.path.exists(path_dir):
-        try:
-            Path(path_dir).rmdir()
-        except OSError as exc:  # Guard against race condition
-            if exc.errno == errno.EEXIST:
-                raise RuntimeError("Fail to remove path {}".format(path_dir))
+        shutil.rmtree(path_dir)
             
     try:
         Path(path_dir).mkdir(parents=True, exist_ok=True)
