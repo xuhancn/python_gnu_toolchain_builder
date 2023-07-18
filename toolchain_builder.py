@@ -74,6 +74,7 @@ def build_binutils():
 
     subprocess.check_call(["git", "reset", "--hard"], cwd=BU_SOURCE)
     subprocess.check_call(["git", "checkout", BU_GIT_BRANCH], cwd=BU_SOURCE)
+    subprocess.check_call(["git", "pull"], cwd=BU_SOURCE)
 
     BU_CFG = os.path.join(BU_SOURCE, "." , "configure")
 
@@ -95,6 +96,7 @@ def build_gcc():
 
     subprocess.check_call(["git", "reset", "--hard"], cwd=GCC_SOURCE)
     subprocess.check_call(["git", "checkout", GCC_GIT_BRANCH], cwd=GCC_SOURCE)
+    subprocess.check_call(["git", "pull"], cwd=GCC_SOURCE)
 
     GCC_DOWNLOAD_DEPENDS = os.path.join(GCC_SOURCE, "contrib" , "download_prerequisites")
     subprocess.check_call([GCC_DOWNLOAD_DEPENDS], cwd=GCC_SOURCE)
