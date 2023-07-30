@@ -44,6 +44,7 @@ GCC_CONFIGURE_FLAGS += "--with-gcc-major-version-only --with-linker-hash-style=g
 GCC_CONFIGURE_FLAGS += "--enable-offload-targets=nvptx-none --without-cuda-driver --enable-gnu-indirect-function --enable-cet "
 GCC_CONFIGURE_FLAGS += "--with-tune=generic --with-arch_32=i686 --with-multilib-list=m32,m64 --with-build-config=bootstrap-lto "
 GCC_CONFIGURE_FLAGS += "--enable-link-serialization=1 --with-fpmath=sse "
+GCC_CONFIGURE_FLAGS += "--with-default-libstdcxx-abi=gcc4-compatible "
 
 ################## Basic Function ##################
 def create_if_not_exist(path_dir):
