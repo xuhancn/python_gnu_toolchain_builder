@@ -9,8 +9,8 @@ import multiprocessing
 import shutil
 
 ################## Version Control ##################
-BU_GIT_BRANCH = "binutils-2_40-branch"
-GCC_GIT_BRANCH = "releases/gcc-12"
+BU_GIT_BRANCH = "binutils-2_40"
+GCC_GIT_BRANCH = "releases/gcc-12.3.0"
 
 ################## Global Config ##################
 CURRENT_DIR = os.getcwd()
