@@ -9,7 +9,7 @@ import multiprocessing
 import shutil
 
 ################## Version Control ##################
-BU_GIT_BRANCH = "binutils-2_40"
+BU_GIT_BRANCH = "binutils-2_40-branch"
 GCC_GIT_BRANCH = "releases/gcc-12.3.0"
 
 ################## Global Config ##################
@@ -97,7 +97,7 @@ def build_gcc():
 
     subprocess.check_call(["git", "reset", "--hard"], cwd=GCC_SOURCE)
     subprocess.check_call(["git", "checkout", GCC_GIT_BRANCH], cwd=GCC_SOURCE)
-    subprocess.check_call(["git", "pull"], cwd=GCC_SOURCE)
+    # subprocess.check_call(["git", "pull"], cwd=GCC_SOURCE)
 
     GCC_DOWNLOAD_DEPENDS = os.path.join(GCC_SOURCE, "contrib" , "download_prerequisites")
     subprocess.check_call([GCC_DOWNLOAD_DEPENDS], cwd=GCC_SOURCE)
