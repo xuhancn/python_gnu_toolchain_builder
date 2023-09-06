@@ -90,14 +90,27 @@ def build_binutils():
 
     return 0
 
+def get_patch_file_path(gcc_ver):
+    # patch file
+    ver_path = f"gcc_{gcc_ver}"
+    PATCH_FILE = os.path.join(CURRENT_DIR, "patches" , ver_path, "gcc12-libstdc++-compat.patch")
+    return PATCH_FILE
+
+
 def build_gcc():
     recreate_if_exist(BUILD_DIR_GCC)
 
     GCC_SOURCE = os.path.join(CURRENT_DIR, "gnu_repos" , "gcc")
+    PATCH_FILE = get_patch_file_path(12)
+    print("!!!!!!PATCH_FILE: {}".format(PATCH_FILE))
 
     subprocess.check_call(["git", "reset", "--hard"], cwd=GCC_SOURCE)
     subprocess.check_call(["git", "checkout", GCC_GIT_BRANCH], cwd=GCC_SOURCE)
     subprocess.check_call(["git", "pull"], cwd=GCC_SOURCE)
+
+    patch_cmd = "patch -p0 < {}".format(PATCH_FILE)
+    print("!!!!!!patch_cmd: {}".format(patch_cmd))
+    subprocess.check_call(["sh", "-c", patch_cmd], cwd=GCC_SOURCE)
 
     GCC_DOWNLOAD_DEPENDS = os.path.join(GCC_SOURCE, "contrib" , "download_prerequisites")
     subprocess.check_call([GCC_DOWNLOAD_DEPENDS], cwd=GCC_SOURCE)
