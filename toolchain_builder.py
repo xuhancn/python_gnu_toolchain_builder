@@ -42,7 +42,7 @@ GCC_CONFIGURE_FLAGS += "--enable-shared --enable-threads=posix --enable-checking
 GCC_CONFIGURE_FLAGS += "--enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id "
 GCC_CONFIGURE_FLAGS += "--with-gcc-major-version-only --with-linker-hash-style=gnu --enable-plugin --enable-initfini-array "
 GCC_CONFIGURE_FLAGS += "--enable-offload-targets=nvptx-none --without-cuda-driver --enable-gnu-indirect-function --enable-cet "
-GCC_CONFIGURE_FLAGS += "--with-tune=generic --with-arch_32=i686 --with-multilib-list=m32,m64 --with-build-config=bootstrap-lto "
+GCC_CONFIGURE_FLAGS += "--with-tune=generic --with-arch_32=x86-64 --with-build-config=bootstrap-lto "
 GCC_CONFIGURE_FLAGS += "--enable-link-serialization=1 --with-fpmath=sse "
 GCC_CONFIGURE_FLAGS += "--with-default-libstdcxx-abi=gcc4-compatible "
 
